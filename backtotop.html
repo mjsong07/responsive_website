@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>backtotop</title> 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    #header {
+        padding-bottom: 2000px;
+        border: 1px solid #000;
+    }
+
+    #footer {
+        padding-bottom: 2000px;
+        border: 1px solid #000;
+    }
+
+    .container {
+        position: relative;
+        font-size: 16px; 
+        /* overflow: hidden; */
+    }
+
+    /* 返回首页 */
+    .product-back-to-top {
+        position: fixed;
+        right: 5vw;
+        bottom: 5vw;
+        cursor: pointer;
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+        display: flex; 
+        z-index: 11;
+        flex-direction: column;
+        align-items: center;  
+        font-weight: bold;
+        justify-content: space-evenly;
+        box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        opacity: 0.8;
+        /* 默认不显示 */
+        visibility: hidden;
+    }
+
+    .product-back-to-top:hover {
+        opacity: 1;
+    }
+
+    .product-back-to-top i {
+        transform: rotate(-90deg);
+        font-size: 32px;
+        vertical-align: middle;
+    } 
+</style>
+
+<body>
+    <div class="container">
+        <div class="product-back-to-top"> 
+            <span>Top</span>
+        </div>
+        <div id="header">
+            我是header
+        </div>
+        <div class="gsap">
+            我是内容
+        </div>
+        <div id="footer">
+            我是footer
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() { 
+            let fixedStartVal = 70; 
+            if ($(window).width() < 1023) { // ipad 或移动
+                fixedStartVal = 52;
+            }
+            // 返回顶部
+            $('.product-back-to-top').click(function () { 
+                var container = $('html');
+                let offset = $("#header").offset().top - fixedStartVal 
+                container.animate({ scrollTop: offset })
+            })
+            checkBackToTopState()
+            function checkBackToTopState() {
+                let nowTop = $(window).scrollTop()
+                let screenHeight = $(window).height() 
+                console.log("nowTop",nowTop,screenHeight) 
+                // if ($(window).width() < 767) { //只有ipad 或 移动端才控制
+                    if (nowTop < screenHeight) {
+                        $('.product-back-to-top').css("visibility", "hidden")
+                    } else {
+                        $('.product-back-to-top').css("visibility", "visible")
+                    }
+                // } 
+            }
+            $(window).scroll(function () {
+                checkBackToTopState() 
+            })
+
+        }); 
+    </script>
+</body>
+
+</html>
